@@ -1,34 +1,21 @@
 package com.flowers.springsecurity.controllers;
 
-import com.flowers.springsecurity.dtos.AuthenticationRequest;
-import com.flowers.springsecurity.dtos.AuthenticationResponse;
-import com.flowers.springsecurity.dtos.RegisterRequest;
-import com.flowers.springsecurity.service.AuthService;
+import com.flowers.springsecurity.entities.User;
+import com.flowers.springsecurity.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService service;
+    private final AccountService accountService;
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request)
-    {
-        return ResponseEntity.ok(service.register(request));
-    }
-
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody AuthenticationRequest request)
-    {
-        return ResponseEntity.ok(service.authenticate(request));
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return accountService.listUsers();
     }
 }
